@@ -1,75 +1,78 @@
 # signdetection
 
+# 🧠 Real-Time Sign Language Action Detection
+
+This project implements a real-time **action detection system** for **sign language recognition**, using **MediaPipe**, **OpenCV**, and a custom **LSTM-based model** trained on keypoint sequences.
+
+It helps in bridging communication gaps for the hearing and speech impaired by identifying hand gestures and converting them into actions.
+---
+
+## 🔧 Technologies Used
+
+- 🧠 MediaPipe Holistic for keypoint detection (face, pose, hands)
+- 🎥 OpenCV for real-time video capture
+- 🔢 NumPy & Pandas for data manipulation
+- 🤖 TensorFlow / Keras for model training
+- 📈 Matplotlib for visualization
+
+---
+
+## 📂 Project Structure
 action-detection-sign/
 │
-├── data/                     # Datasets (or links/info)
-│   └── README.md             # How to download or preprocess datasets
+├── data/                     # Raw and processed keypoint data
+│   └── extracted_keypoints/
 │
-├── notebooks/                # Jupyter Notebooks for exploration/training
-│   └── sign_detection_model.ipynb
+├── models/                   # Saved Keras model
+│   └── action.h5
 │
-├── models/                   # Saved models and checkpoints
-│   └── model.h5 / model.pt
+├── notebooks/                # Jupyter notebook (core development)
+│   └── Action Detection Refined.ipynb
 │
-├── scripts/                  # Python scripts for training/inference
-│   ├── train.py
-│   ├── preprocess.py
-│   └── detect.py
+├── scripts/                  # Python scripts (optional)
+│   ├── detect.py             # Real-time detection script
+│   ├── train.py              # Model training script
 │
-├── app/                      # Optional web or desktop interface
-│   ├── app.py                # Flask or Streamlit app
-│   └── templates/
-│
-├── requirements.txt          # Required Python packages
-├── README.md                 # Project overview and usage
-├── demo.gif / demo.mp4       # Demo video or animation (for README)
-└── .gitignore
-
-# 🧠 Sign Language Action Detection
-
-A deep learning-based real-time **sign language action detection system** built using OpenCV, MediaPipe, and TensorFlow/PyTorch. This project aims to help bridge the communication gap for the hearing or speech-impaired.
+├── demo.gif / demo.mp4       # Demo visuals
+├── requirements.txt
+└── README.md
 
 ---
 
-## 📌 Features
+## 🗃️ Dataset Info
 
-- 🔤 Recognizes hand gestures and signs from live webcam input
-- 🧠 Trained on labeled sign language actions
-- 🎥 Uses MediaPipe/OpenCV for video capture and landmark extraction
-- 💻 Real-time detection with FPS monitoring
-- 🌐 Optional web app using Flask/Streamlit
-
----
-
-## 🗃️ Dataset
-
-- Source: [Link to dataset] (e.g., ASL dataset, custom video dataset)
-- Format: Video clips or pre-extracted keypoints
-- Preprocessing: Extracted keypoints using MediaPipe Holistic
+- **Type**: Custom dataset based on body landmarks
+- **Classes**: `Hello`, `Thanks`, `I Love You` (customizable)
+- **Source**: Webcam input
+- **Format**: Sequences of 30 frames containing keypoints
+- **Keypoint Count**: 1662 per frame (Pose + Face + Left/Right hand landmarks)
 
 ---
 
 ## 🏗️ Model Architecture
 
-- **Input**: Sequence of 30 frames (each with 1662 keypoints: face + hands + pose)
-- **Model**: LSTM/GRU or 1D CNN
-- **Output**: Predicted action class (e.g., Hello, Thank You, I Love You)
+A simple LSTM model processes sequences of 30 frames (each frame contains MediaPipe keypoints):
 
-`python
-Input (30 frames) → LSTM Layers → Dense → Softmax
+``python
+Input(shape=(30, 1662)) → LSTM → Dropout → Dense → Softmax
 
-🚀 Installation
-git clone https://github.com/yourusername/action-detection-sign.git
-cd action-detection-sign
-pip install -r requirements.txt
+##How to Run
 
-Future Improvements
-	•	Add more sign actions
-	•	Multilingual support (ISL, BSL, etc.)
-	•	Deploy to mobile/web with TensorFlow Lite or TF.js
-	•	Add voice-to-sign translation
+1. Install Dependencies
+   pip install -r requirements.txt
+2.Train the Model
+   # Optional if you already have action.h5
+     python scripts/train.py
+3.Run Real-Time Detection
+  python scripts/detect.py
+ 
+##Future Work
+	•Add more sign language classes (ASL/ISL dataset)
+	•Export model to TF.js or TFLite for web/mobile
+	•Add text-to-speech output
+	•Create full-stack web app with Flask or Streamlit
 
-🤝 Let’s Connect
-	•	LinkedIn: www.linkedin.com/in/skarthikml
-	•	GitHub: karthik2369
-	•	Email: skarthik2369@gmail.com
+ Connect
+	•Name: S Karthik
+	•GitHub: karthik2369
+	•LinkedIn: www.linkedin.com/in/skarthikml
